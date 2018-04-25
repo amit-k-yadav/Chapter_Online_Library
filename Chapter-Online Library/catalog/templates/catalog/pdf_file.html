@@ -1,0 +1,18 @@
+<html>
+    {% load static %}
+    <head>
+        <style>
+            .images{
+              width:30px;
+            }
+		</style>
+        <span class='images'><img src="{% static 'img/library_image.png' %}" alt="Library Icon" height='30px' width='30px' /></span> <br />
+        <strong class="text-warning">Title:  {{ book.title }}  </strong><br /><br />
+    </head>
+
+    <body>
+		<strong class="text-warning">Authors:</strong>   {{ book.authors }} <br /><br />
+        <strong class="text-warning">Genres:</strong>   {{ book.display_genre }} <br /><br />
+        <strong class="text-warning">Summary:</strong>   {{ book.summary }} <br /><br />
+    </body>
+</html>

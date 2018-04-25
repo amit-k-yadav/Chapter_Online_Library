@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{% if books_available %}
+		<h2>List of books available:</h2>
+		<ol>
+		{% for books in books_available %}
+			<li>{{ books.book.title }} (<a href="{% url 'author-details' books.book.authors.pk %}">{{ books.book.authors }}</a>) - <a href="{% url 'borrow_book' books.pk user.pk %}"><strong>Borrow</strong></a></li>
+		{% endfor %}
+        </ol>
+	{% else %}
+		<h3>No books available at this moment of time</h3>
+	{% endif %}
+{% endblock %}

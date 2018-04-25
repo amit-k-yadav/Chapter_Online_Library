@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}-Book Details{% endblock %}
+{% block content %}
+
+  <h1>Title: {{ book_list.title }}</h1>
+
+  <p><strong>Author:</strong> <a href="{% url 'author-details' book_list.authors.pk %}">{{ book_list.authors }}</a></p> <!-- author detail link not yet defined -->
+  <p><strong>Summary:</strong> {{ book_list.summary }}</p>
+  <p><strong>ISBN:</strong> {{ book_list.isbn }}</p>
+  <p><strong>Language:</strong> {{ book.bookinstance.language }}</p>
+  <p><strong>Genre:</strong> {% for genre in book_list.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+
+	<div style="margin-left:20px;margin-top:20px">
+    <h4>Copies</h4>
+
+    {% for copy in book_list.bookinstance_set.all %}
+    <hr>
+    <p class="{% if copy.status == 'A' %}text-success
+              {% elif copy.status == 'M' %}text-danger
+              {% else %}text-warning{% endif %}">
+        {{ copy.get_status_display }}
+    </p>
+    {% if copy.status != 'A' %}<p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>{% endif %}
+    <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
+    <p class="text-muted"><strong>Id:</strong> {{ copy.books_id }}</p>
+    {% endfor %}
+  </div>
+
+
+{% endblock %}

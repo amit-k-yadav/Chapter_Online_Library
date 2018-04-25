@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}-All Authors{% endblock %}
+{% block content %}
+	<h2><b>Authors List</b></h2>
+	{% if author_list %}
+		{% for author in author_list %}
+			<ul>
+            	<li><a href="{{ author.get_absolute_url }}">{{ author.name }}</a></li>
+			</ul>
+		{% endfor %}
+	{% else %}
+		<p><strong>No Authors available</strong></p>
+	{% endif %}
+	<input type="button" class="btn btn-success btn-sm" value="Add an Author" onclick="location.href='{% url 'add-author' %}'"  />
+	<br />
+{% endblock %}

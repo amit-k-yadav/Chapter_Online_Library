@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>All Borrowed Books From The Library</h1>
+	{% if all_borrowed %}
+		{% for book_inst in all_borrowed %}
+			<ul>
+                <li class="{% if book_inst.is_overdue %}text-danger{% else %}text-success{% endif %}">
+                <a href="{% url 'book-details' book_inst.book.pk %}">{{ book_inst.book.title }}</a>
+                    ({{ book_inst.due_back }}) - <a href="{% url 'renew' book_inst.pk %}"><strong><u>Renew</u></strong></a>
+                </li>
+			</ul>
+		{% endfor %}
+	{% else %}
+		<h3 class="text-warning">No Books borrowed yet.</h3>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if next %}
+	<p class='text-warning'>Librarian access or user login is required for this action. Please login to continue.</p>
+{% endif %}
+
+
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+
+<div>
+  <strong>Username:  </strong>{{ form.username }}<br/ ><br/ >
+  <strong>Password:  </strong>{{ form.password }}<br/ >
+</div>
+
+<div>
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary btn-sm">Login</button>
+    <p><strong>------ OR ------</strong></p>
+    <a href='#' onclick='overlay()'>Login Using Social Websites</a> <br />
+  	<input type="hidden" name="next" value="{{ next }}" />
+    <a href="{% url 'password_reset' %}" class='text-danger'><strong>Forgot Password?</strong></a> <hr />
+    <p>Don't have an account? <a href="{% url 'signup' %}"><b>SignUp Here</b></a></p>
+</div>
+</form>
+{% if form.errors %}
+<br /><strong class="text-danger">Please make sure the entered Username and Password combination is correct</strong>
+{% endif %}
+
+<!-- Pop Up Content -->
+<div id="overlay">
+            <div>
+                <a href='#' onclick='overlay()' class='text-danger' id="x"><strong>Close</strong></a> <br /> <br />
+                <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+                <p><strong>------ OR ------</strong></p>
+                <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a> <br />
+                <p><strong>------ OR ------</strong></p>
+                <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a> <br />
+                <p><strong>-- OR --</strong></p>
+                <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
+            </div>
+</div>
+<!-- Pop Up Content -->
+
+{% endblock %}

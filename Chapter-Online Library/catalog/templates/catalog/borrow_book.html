@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>Enter below details to borrow:</h1>
+	<form action="" method="POST">
+		{% csrf_token %}
+        <table>
+			{{ form }}
+		</table>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-primary">Borrow</button>
+	</form>
+
+
+{% endblock %}

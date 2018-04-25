@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+	<form action="/catalog/add_book/" method='POST' novalidate>
+       {% csrf_token %}
+        <table border='0.5'>
+        	{{ form }}
+        </table>
+          <button type="submit" class="btn btn-primary">Add Book</button>
+	</form>
+{% endblock %}

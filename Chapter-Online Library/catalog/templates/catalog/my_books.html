@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h2>Borrowed Books</h2>
+	{% if my_books %}
+		{% for book_inst in my_books %}
+			<li class = "{% if book_inst.is_overdue %}text-danger{% else %}text-success{% endif %}">
+                <a href="{% url 'book-details' book_inst.book.pk %}">{{ book_inst.book.title }}</a>
+                {% if book_inst.due_back != None %}
+                	( {{ book_inst.due_back }})
+                {% endif %}
+            </li>
+		{% endfor %}
+	{% else %}
+		<strong>No Books Borrowed by the user</strong>
+	{% endif %} <br />
+		<input class="btn btn-primary btn-sm" type="button" value="Borrow More Books"
+       	onclick="location.href='{% url 'available_books' %}'"  />
+{% endblock %}

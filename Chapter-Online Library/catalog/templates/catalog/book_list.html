@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block title %}-All Books{% endblock %}
+
+{% block content %}
+
+	{% if my_book_list %}
+	{% load static %}
+		{% for books in my_book_list %}
+			<ul>
+            	<li><a href="{{ books.get_absolute_url }}">{{ books.title }}</a> ({{books.authors}})
+                -<a href="{% url 'pdf' books.pk %}">  <img src="{% static 'img/Download.png' %}" height="15" width="15"  />  </a></li><br/>
+			</ul>
+		{% endfor %}
+
+		<br />
+	{% else %}
+		<h2> No Books Available </h2>
+	{% endif %}
+<input class="btn btn-success btn-sm" type="button" value="Add a Book" onclick="location.href='{% url 'add_book' %}'"  />
+
+
+{% endblock %}

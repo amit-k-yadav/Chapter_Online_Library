@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    <head>
+
+        <title>Chapter{% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/png" href="{% static 'img/book_icon.png' %}" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/popup.js' %}"></script>
+        <!-- Add additional CSS in static file -->
+
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+
+        <style>
+            #overlay {
+                visibility: hidden;
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                width:100%;
+                height:100%;
+                text-align:center;
+                z-index: 1000;
+                background:rgba(255,255,255,0.5);
+            }
+
+            #overlay div {
+                width:300px;
+                margin: 100px auto;
+                background-color: #fff;
+                border:1px solid #000;
+                padding:15px;
+                text-align:center;}
+
+            #x {
+                background: red;
+                color: white;
+            }
+
+        </style>
+        <script>
+            function overlay() {
+                el = document.getElementById("overlay");
+                el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+            }
+        </script>
+
+    </head>
+
+    <body>
+
+        {% block navbar %}
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                 <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+				<!-- <a href=""><img class="navbar-brand" src="{% static 'img/library_image.png' %}" /></a>-->
+                   <a class="navbar-brand" href="{% url 'index' %}"  class="active">Chapter</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'books' %}">All books</a></li>
+                        <li><a href="{% url 'authors' %}">All authors</a></li>
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'all_borrowed' %}" class='active'>All Borrowed Books (Staff)</a></li>
+                        <li><a href="{% url 'my_books' %}" >My Borrowed Books</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}"><strong><span class="glyphicon glyphicon-user">												</span>&nbsp;&nbsp;Logout</strong></a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}"><strong><span class="glyphicon glyphicon-user">													</span>&nbsp;&nbsp;Login</strong></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% endblock %}
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-sm-3 col-xs-1 col-lg-3 col-md-3">
+
+                    <!--  -->
+                    <!--  {% block sidebar %}
+<ul class="sidebar-nav">
+
+<li><a href="{% url 'index' %}">Home</a></li>
+<li><a href="{% url 'books' %}">All books</a></li>
+<li><a href="{% url 'authors' %}">All authors</a></li>
+{% if user.is_authenticated %}
+<strong>User:<strong class="text-danger"> {{ user.get_username }}</strong></strong>
+<li><a href="{% url 'logout' %}"><strong>Logout</strong></a></li>
+{% else %}
+<a href="{% url 'login' %}"><strong>Login</strong></a>
+{% endif %}
+</ul>
+<a href="{% url 'my_books' %}" >My Borrowed Books</a>
+<hr />
+<strong>Staff</strong><br />
+<a href="{% url 'all_borrowed' %}">All Borrowed Books</a>
+{% endblock %} -->
+                </div>
+
+
+                <div class="col-sm-6 col-xs-11 col-lg-6 col-md-6">
+
+
+                    {% block content %}
+                    {% endblock %}
+
+                    <!-- PAGINATION -->
+                    {% block pagination %}
+                    {% if is_paginated %}
+                    <div class="pagination">
+                        <span class="page-links">
+                            {% if page_obj.has_previous %}
+                            <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                            {% endif %}
+                            <span class="page-current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+                            {% if page_obj.has_next %}
+                            <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% endif %}
+                    {% endblock %}
+                </div>
+                <div class="col-sm-3 col-sm-3 col-xs-0 col-lg-3 col-md-3">
+                </div>
+            </div>
+            <!-- PAGINATION -->
+
+        </div>
+    </body>
+</html>

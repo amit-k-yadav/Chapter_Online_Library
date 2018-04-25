@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}-Author Details{% endblock %}
+{% block content %}
+		<h1>Author: {{ authors_detail.name }}</h1>
+		<p>{{ authors_detail.dob }}-{% if authors_detail.dod != None %}{{ authors_detail.dod }}{% endif %}</p>
+		<div style="margin-left:20px;margin-top:20px">
+			<h3>Books</h3>
+            {% if authors_detail.book_set.all %}
+            	{% for book in authors_detail.book_set.all %}
+            		<ul>
+            			<li><a href="{{ book.get_absolute_url }}"><strong>{{ book.title }}</strong></a><p>{{ book.summary }}</p></li>
+            		</ul>
+            	{% endfor %}
+            {% else %}
+                <p>
+                    No Books available for this author.
+                </p>
+            {% endif %}
+
+		</div>
+	<input class="btn btn-primary" type="button" value="Update Author"
+           onclick="location.href='{% url 'update-author' authors_detail.pk %}'"  /> &nbsp;&nbsp;&nbsp;
+
+	<input class="btn btn-danger" type="button" value="Delete Author"
+           onclick="location.href='{% url 'delete-author' authors_detail.pk %}'"  />
+{% endblock %}
